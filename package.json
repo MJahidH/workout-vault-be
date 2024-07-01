@@ -1,0 +1,24 @@
+{
+  "name": "workout-vault-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup-db": "mysql -uroot -proot --socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock < ./db/setup.sql",
+    "test":"jest",
+    "seed": "node ./db/seeds/run-seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.10.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
