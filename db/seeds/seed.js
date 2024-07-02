@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS exercises (
       );
     })
     .then(() => {
-      console.log("Database seeded successfully!");
+      // console.log("Database seeded successfully!");
     })
     .catch((error) => {
       console.error("Error seeding database:", error);

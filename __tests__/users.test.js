@@ -18,13 +18,14 @@ afterAll(() => {
   });
 });
 
-describe.only("User Log In",() => {
+describe.only("User Login",() => {
     test("200, user has typed in the right username and password", () => {
         return request(app)
         .post("/login")
+        .send({username : "nathan101" ,password : "pizza" })
         .expect(200)
         .then((res) => {
-            console.log(res.text)
+    expect(res.body.text).toBe("User Login Successful")
         })
     })
 })
