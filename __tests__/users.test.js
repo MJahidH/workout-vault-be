@@ -28,4 +28,13 @@ describe.only("User Login",() => {
     expect(res.body.text).toBe("User Login Successful")
         })
     })
+    test("404, Username Not Found", () => {
+      return request(app)
+      .post("/login")
+      .send({username : "nathan" ,password : "pizza" })
+      .expect(404)
+      .then((res) => {
+        expect(res.body.error).toBe("Username Not Found")
+      })
+  })
 })

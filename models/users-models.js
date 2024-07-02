@@ -12,11 +12,19 @@ exports.userLoginModel = (username,password) => {
     return pool.query(`SELECT * FROM users WHERE username = ?`,[username])
     .then((res) => {
       const user = res[0][0]
-      return bcrypt.compare(password,user.password)
-      .then((validPassword) => {
-        const token = jwt.sign({id : user.id},jwtSecret,{ expiresIn: "1h" })
-        return token
-      })
+      if (!user ) {
+        return Promise.reject({
+            status: 404,
+            msg: "Username Not Found",
+          });
+      } else {
+        return bcrypt.compare(password,user.password)
+        .then((validPassword) => {
+          const token = jwt.sign({id : user.id},jwtSecret,{ expiresIn: "1h" })
+          return token
+        })
+      }
+
       
     })
 }
