@@ -18,7 +18,7 @@ afterAll(() => {
   });
 });
 
-describe.only("User Login", () => {
+describe("User Login", () => {
   test("200, user has typed in the right username and password", () => {
     return request(app)
       .post("/login")
