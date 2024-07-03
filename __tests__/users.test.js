@@ -37,4 +37,23 @@ describe.only("User Login",() => {
         expect(res.body.error).toBe("Username Not Found")
       })
   })
+  test("404, Incorrect Password", () => {
+    return request(app)
+    .post("/login")
+    .send({username : "nathan101" ,password : "pizza10000" })
+    .expect(401)
+    .then((res) => {
+      expect(res.body.error).toBe("Incorrect Password")
+    })
+})
+  test("404, Bad Request : response object does not contain the right keys", () => {
+    return request(app)
+    .post("/login")
+    .send({user101 : "nathan101" ,password : "pizza" })
+    .expect(400)
+    .then((res) => {
+
+      expect(res.body.error).toBe("Bad Request")
+    })
+})
 })
