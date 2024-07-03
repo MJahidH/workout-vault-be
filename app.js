@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
-const { userLoginController } = require("./controllers/users-controllers");
+const { userLoginController,userRegisterController } = require("./controllers/users-controllers");
 
 app.use(express.json());
 
 app.post("/login", userLoginController);
+app.post("/register", userRegisterController);
 
 
 

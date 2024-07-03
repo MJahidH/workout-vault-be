@@ -57,4 +57,25 @@ describe("User Login", () => {
   });
 });
 
+describe.only("User Signup", () => {
+  test("200, user has successfuly registered and their detauls have been saved to the database", () => {
+    return request(app)
+    .post("/register")
+    .send({ username: "brandon101", password: "brandon101" })
+    .expect(200)
+    .then((res) => {
+     expect(res.text).toBe("Registration Successful")
+    })
+    .then(() => {
+      return request(app)
+      .post("/login")
+      .send({ username: "brandon101", password: "brandon101" })
+      .expect(200)
+      .then((res) => {
+        expect(res.body.text).toBe("User Login Successful");
+      });
+    })
+    
+  });
 
+});
