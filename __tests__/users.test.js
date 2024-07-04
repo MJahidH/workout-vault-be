@@ -28,6 +28,7 @@ describe("User Login", () => {
         expect(res.body.text).toBe("User Login Successful");
       });
   });
+
   test("404, Username Not Found", () => {
     return request(app)
       .post("/login")
@@ -37,6 +38,7 @@ describe("User Login", () => {
         expect(res.body.error).toBe("Username Not Found");
       });
   });
+
   test("401, Incorrect Password", () => {
     return request(app)
       .post("/login")
@@ -46,6 +48,7 @@ describe("User Login", () => {
         expect(res.body.error).toBe("Incorrect Password");
       });
   });
+
   test("400, Bad Request : response object does not contain the right keys", () => {
     return request(app)
       .post("/login")
@@ -60,22 +63,30 @@ describe("User Login", () => {
 describe.only("User Signup", () => {
   test("200, user has successfuly registered and their detauls have been saved to the database", () => {
     return request(app)
-    .post("/register")
-    .send({ username: "brandon101", password: "brandon101" })
-    .expect(200)
-    .then((res) => {
-     expect(res.text).toBe("Registration Successful")
-    })
-    .then(() => {
-      return request(app)
-      .post("/login")
+      .post("/register")
       .send({ username: "brandon101", password: "brandon101" })
       .expect(200)
       .then((res) => {
-        expect(res.body.text).toBe("User Login Successful");
+        expect(res.text).toBe("Registration Successful");
+      })
+      .then(() => {
+        return request(app)
+          .post("/login")
+          .send({ username: "brandon101", password: "brandon101" })
+          .expect(200)
+          .then((res) => {
+            expect(res.body.text).toBe("User Login Successful");
+          });
       });
-    })
-    
   });
 
+  test("409, user already exists", () => {
+    return request(app)
+      .post("/register")
+      .send({ username: "nathan101", password: "pizza" })
+      .expect(409)
+      .then((res) => {
+        // expect(res.text).toBe("Registration Successful");
+      });
+  });
 });

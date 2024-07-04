@@ -14,5 +14,5 @@ exports.userRegisterController = (req, res, next) => {
 
   userRegisterModel(username, password).then(() => {
     res.status(200).send( "Registration Successful");
-  });
+  }).catch(next)
 };

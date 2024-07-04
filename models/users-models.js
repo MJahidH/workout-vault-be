@@ -42,10 +42,25 @@ exports.userLoginModel = (username, password) => {
 };
 
 exports.userRegisterModel = (username, password) => {
-  return bcrypt.hash(password, 10).then((hashedPassword) => {
-    return pool.query(`INSERT INTO users (username,password) VALUES (?,?)`, [
-      username,
-      hashedPassword,
-    ]);
-  });
+  return pool
+    .query(`SELECT * From users WHERE username = ?`, [username])
+    .then((res) => {
+
+      if (res[0].length === 1) {
+        return Promise.reject({
+          status: 409,
+          msg: "User Already Exists",
+        });
+      }
+    })
+    .then(() => {
+      return bcrypt.hash(password, 10);
+    })
+    .then((hashedPassword) => {
+      return pool.query(`INSERT INTO users (username,password) VALUES (?,?)`, [
+        username,
+        hashedPassword,
+      ]);
+    })
+
 };
