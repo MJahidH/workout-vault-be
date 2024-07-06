@@ -60,7 +60,7 @@ describe("User Login", () => {
   });
 });
 
-describe.only("User Signup", () => {
+describe("User Signup", () => {
   test("200, user has successfuly registered and their detauls have been saved to the database", () => {
     return request(app)
       .post("/register")

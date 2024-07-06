@@ -16,8 +16,8 @@ exports.userLoginModel = (username, password) => {
   }
   return pool
     .query(`SELECT * FROM users WHERE username = ?`, [username])
-    .then((res) => {
-      const user = res[0][0];
+    .then(([result]) => {
+      const [user] = result;
       if (!user) {
         return Promise.reject({
           status: 404,
@@ -44,9 +44,8 @@ exports.userLoginModel = (username, password) => {
 exports.userRegisterModel = (username, password) => {
   return pool
     .query(`SELECT * From users WHERE username = ?`, [username])
-    .then((res) => {
-
-      if (res[0].length === 1) {
+    .then(([res]) => {
+      if (res.length === 1) {
         return Promise.reject({
           status: 409,
           msg: "User Already Exists",
