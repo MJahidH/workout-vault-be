@@ -7,7 +7,7 @@ dotenv.config();
 const jwtSecret = process.env.JWT_SECRET;
 
 exports.userLoginModel = (username, password) => {
-  // console.log("this is the userLoginModel ")
+
   if (!username || !password) {
     return Promise.reject({
       status: 400,
@@ -70,5 +70,5 @@ exports.userRegisterModel = (username, password) => {
         username,
         hashedPassword,
       ]);
-    });
+    })
 };

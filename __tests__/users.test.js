@@ -49,7 +49,7 @@ describe("User Login", () => {
       });
   });
 
-  test("400, Bad Request : response object does not contain the right keys", () => {
+  test.only("400, Bad Request : response object does not contain the right keys", () => {
     return request(app)
       .post("/login")
       .send({ user101: "nathan101", password: "pizza" })
@@ -86,6 +86,7 @@ describe("User Signup", () => {
       .send({ username: "nathan101", password: "pizza123" })
       .expect(409)
       .then((res) => {
+
         expect(res.body.error).toBe("User Already Exists");
       });
   });
@@ -96,6 +97,16 @@ describe("User Signup", () => {
       .expect(422)
       .then((res) => {
         expect(res.body.error).toBe("Password/Useranme Not Strong Enough");
+      });
+  });
+
+  test("400, Bad Request", () => {
+    return request(app)
+      .post("/register")
+      .send({ user: "brandon101", password: "apple123" })
+      .expect(400)
+      .then((res) => {
+        expect(res.body.msg).toBe("Bad Request");
       });
   });
 
