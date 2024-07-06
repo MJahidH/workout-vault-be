@@ -42,6 +42,8 @@ exports.userLoginModel = (username, password) => {
 };
 
 exports.userRegisterModel = (username, password) => {
+
+
   return pool
     .query(`SELECT * From users WHERE username = ?`, [username])
     .then(([res]) => {
@@ -53,6 +55,14 @@ exports.userRegisterModel = (username, password) => {
       }
     })
     .then(() => {
+      const regex = /^(?=.*\d).{8,}$/;
+
+      if (!regex.test(password,username)) {
+        return Promise.reject({
+          status: 422,
+          msg: "Password/Useranme Not Strong Enough",
+        });  
+      }
       return bcrypt.hash(password, 10);
     })
     .then((hashedPassword) => {
@@ -60,6 +70,5 @@ exports.userRegisterModel = (username, password) => {
         username,
         hashedPassword,
       ]);
-    })
-
+    });
 };

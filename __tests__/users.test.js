@@ -83,10 +83,20 @@ describe("User Signup", () => {
   test("409, user already exists", () => {
     return request(app)
       .post("/register")
-      .send({ username: "nathan101", password: "pizza" })
+      .send({ username: "nathan101", password: "pizza123" })
       .expect(409)
       .then((res) => {
-        // expect(res.text).toBe("Registration Successful");
+        expect(res.body.error).toBe("User Already Exists");
       });
   });
+  test("422, unprocessable entity : password/username is not strong enough", () => {
+    return request(app)
+      .post("/register")
+      .send({ username: "brandon", password: "apple" })
+      .expect(422)
+      .then((res) => {
+        expect(res.body.error).toBe("Password/Useranme Not Strong Enough");
+      });
+  });
+
 });
