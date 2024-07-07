@@ -49,7 +49,7 @@ describe("User Login", () => {
       });
   });
 
-  test.only("400, Bad Request : response object does not contain the right keys", () => {
+  test("400, Bad Request : response object does not contain the right keys", () => {
     return request(app)
       .post("/login")
       .send({ user101: "nathan101", password: "pizza" })
@@ -60,7 +60,7 @@ describe("User Login", () => {
   });
 });
 
-describe("User Signup", () => {
+describe.only("User Registration", () => {
   test("200, user has successfuly registered and their detauls have been saved to the database", () => {
     return request(app)
       .post("/register")

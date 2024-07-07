@@ -4,11 +4,12 @@ const {
   userLoginController,
   userRegisterController,
 } = require("./controllers/users-controllers");
+const controllers = require("./controllers/all-controllers")
 
 app.use(express.json());
 
-app.post("/login", userLoginController);
-app.post("/register", userRegisterController);
+app.post("/login", controllers.userLogin);
+app.post("/register", controllers.userRegister);
 
 app.use((err, req, res, next) => {
 
@@ -21,8 +22,10 @@ app.use((err, req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-  if (err.sqlState === "23000") {
-    res.status(400).send({ msg: "Bad Request" });
+  switch (err.sqlState) {
+    case "23000":
+      res.status(400).send({ msg: "Bad Request" });
+      break;
   }
 });
 
